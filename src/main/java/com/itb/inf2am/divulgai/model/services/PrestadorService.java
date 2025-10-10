@@ -12,12 +12,12 @@ import java.util.List;
 public class PrestadorService {
 
     @Autowired       // Injeção de dependência
-    private PrestadorRepository PrestadorRepository;
+    private PrestadorRepository prestadorRepository;
 
     // Método responsável em listar todos os Prestadors cadastrados no banco de dados
 
     public List<Prestador> findAll() {
-        return PrestadorRepository.findAll();
+        return prestadorRepository.findAll();
 
     }
 
@@ -25,6 +25,14 @@ public class PrestadorService {
 
     public Prestador save(Prestador Prestador) {
         Prestador.setStatusPrestador(true);
-        return PrestadorRepository.save(Prestador);
+        return prestadorRepository.save(Prestador);
     }
+
+
+    // Método responsável em listar o prestador por ID
+    public Prestador findById (Long id) {
+        return prestadorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado com o id " + id));
+    }
+
 }

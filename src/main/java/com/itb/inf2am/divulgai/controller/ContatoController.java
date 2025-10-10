@@ -1,11 +1,12 @@
-
-    package com.itb.inf2am.divulgai.controller;
+package com.itb.inf2am.divulgai.controller;
 
 import com.itb.inf2am.divulgai.model.entity.Contato;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.itb.inf2am.divulgai.model.services.ContatoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,21 +17,51 @@ import java.util.List;
     @RequestMapping("/api/v1/contato")
 
     public class ContatoController {
-        List<Contato> Contatos = new ArrayList<>();
+
+// Getter (get): Apenas lê o valor do atributo.
+// Setter (set): Apenas modifica o valor do atributo.
+
+        @Autowired
+        private ContatoService contatoService; // Service, não repository
+
         @GetMapping
         public List<Contato> findAll() {
-            Contato c1 = new Contato();
-            c1.setId(1L);
-            c1.setTipoContato("Instagram");
-            c1.setLink("https://instagram.com/sicranaestetica");
-            c1.setStatusContato(true);
+            return contatoService.findAll(); // chama o service
+        }
+
+        @PostMapping
+        public Contato create(@RequestBody Contato contato) {
+            return contatoService.save(contato); // chama o service
+        }
 
 
+        @GetMapping("/{id}")
+        public ResponseEntity<Object> listarContatoPorId(@PathVariable String id) {
+            try {
+                return ResponseEntity.ok(contatoService.findById(Long.parseLong(id)));
+            } catch (NumberFormatException e) {
+                return ResponseEntity.badRequest().body(
+                        Map.of(
+                                "status", 400,
+                                "error", "Bad Request",
+                                "message", "O id informado não é válido: " + id
+                        )
+                );
 
-            // Adicionando o produto
-            Contatos.add(c1);
 
-            return Contatos;
+            } catch (RuntimeException e) {
+                return ResponseEntity.status(404).body(
+                        Map.of(
+                                "status", 404,
+                                "error", "Not Found",
+                                "message", "Contato não encontrada com o id " + id
+                        )
+
+                );
+
+            }
+
+
         }
     }
 

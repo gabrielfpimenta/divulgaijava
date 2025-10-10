@@ -12,19 +12,26 @@ import java.util.List;
 public class ServicoService {
 
     @Autowired       // Injeção de dependência
-    private ServicoRepository ServicoRepository;
+    private ServicoRepository servicoRepository;
 
-    // Método responsável em listar todos os Servicos cadastrados no banco de dados
-
+    // Método responsável em listar todos as Servicos cadastradas no banco de dados
+    //READ DO CRUD
     public List<Servico> findAll() {
-        return ServicoRepository.findAll();
 
+        return servicoRepository.findAll();
     }
 
-    // Método responsável em Criar o Servico no banco de dados
-
+    // Método responsável em criar a Servico no banco de dados
+    //CREATE DO CRUD
     public Servico save(Servico Servico) {
         Servico.setStatusServico(true);
-        return ServicoRepository.save(Servico);
+        return servicoRepository.save(Servico);
     }
+
+    // Método responsável em listar o servico por ID
+    public Servico findById (Long id) {
+        return servicoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado com o id " + id));
+    }
+
 }

@@ -2,12 +2,14 @@
     package com.itb.inf2am.divulgai.controller;
 
 import com.itb.inf2am.divulgai.model.entity.Servico;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.itb.inf2am.divulgai.model.services.ServicoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 // Getter (get): Apenas lê o valor do atributo.
 // Setter (set): Apenas modifica o valor do atributo.
@@ -16,24 +18,48 @@ import java.util.List;
     @RequestMapping("/api/v1/servico")
 
     public class ServicoController {
-        List<Servico> Servicos = new ArrayList<>();
+
+        @Autowired
+        private ServicoService servicoService; // Service, não repository
+
         @GetMapping
         public List<Servico> findAll() {
-            Servico s1 = new Servico();
-            s1.setId(1L);
-            s1.setNome("Sicrana Bolos");
-            s1.setStatusServico(true);
-            s1.setFoto(null);
+            return servicoService.findAll(); // chama o service
+        }
+
+        @PostMapping
+        public Servico create(@RequestBody Servico servico) {
+            return servicoService.save(servico); // chama o service
+        }
 
 
+        @GetMapping("/{id}")
+        public ResponseEntity<Object> listarServicoPorId(@PathVariable String id) {
+            try {
+                return ResponseEntity.ok(servicoService.findById(Long.parseLong(id)));
+            } catch (NumberFormatException e) {
+                return ResponseEntity.badRequest().body(
+                        Map.of(
+                                "status", 400,
+                                "error", "Bad Request",
+                                "message", "O id informado não é válido: " + id
+                        )
+                );
 
-            // Adicionando o produto
-            Servicos.add(s1);
+
+            } catch (RuntimeException e) {
+                return ResponseEntity.status(404).body(
+                        Map.of(
+                                "status", 404,
+                                "error", "Not Found",
+                                "message", "Servico não encontrada com o id " + id
+                        )
+
+                );
+
+            }
 
 
-
-
-            return Servicos;
         }
     }
 

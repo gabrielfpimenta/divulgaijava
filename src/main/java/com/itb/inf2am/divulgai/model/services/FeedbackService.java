@@ -28,13 +28,13 @@ public class FeedbackService {
     }
 
 
-    // Método responsável em listar o categoria por ID
+    // Método responsável em listar o feedback por ID
     public Feedback findById (Long id) {
         return feedbackRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Produto não encontrado com o id " + id));
     }
 
-    // Método responsável em atualizar em atualizar a categoria
+    // Método responsável em atualizar em atualizar o feedback
     public Feedback update(Long id, Feedback feedback) {
         Feedback feedbackExistente = findById(id);
         feedbackExistente.setDescricao(feedbackExistente.getDescricao());
@@ -43,7 +43,7 @@ public class FeedbackService {
         return feedbackRepository.save(feedbackExistente);
     }
 
-    // Método responsável em excluir a categoria ( exclusão física )
+    // Método responsável em excluir o feedback ( exclusão física )
     public void delete(Long id) {
 
 

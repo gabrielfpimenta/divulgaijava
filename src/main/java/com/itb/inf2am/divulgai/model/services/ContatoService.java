@@ -12,19 +12,26 @@ import java.util.List;
 public class ContatoService {
 
     @Autowired       // Injeção de dependência
-    private ContatoRepository ContatoRepository;
+    private ContatoRepository contatoRepository;
 
     // Método responsável em listar todos os Contatos cadastrados no banco de dados
 
     public List<Contato> findAll() {
-        return ContatoRepository.findAll();
+        return contatoRepository.findAll();
 
     }
 
-    // Método responsável em Criar o Contato no banco de dados
-
+    // Método responsável em criar a contato no banco de dados
+    //CREATE DO CRUD
     public Contato save(Contato Contato) {
         Contato.setStatusContato(true);
-        return ContatoRepository.save(Contato);
+        return contatoRepository.save(Contato);
     }
+
+    // Método responsável em listar o contato por ID
+    public Contato findById (Long id) {
+        return contatoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado com o id " + id));
+    }
+
 }
