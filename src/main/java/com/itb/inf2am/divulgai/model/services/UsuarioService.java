@@ -25,7 +25,6 @@ public class UsuarioService {
     // Método responsável em Criar o Usuario no banco de dados
 
     public Usuario save(Usuario usuario) {
-        usuario.setStatusUsuario(true);
         return usuarioRepository.save(usuario);
     }
 

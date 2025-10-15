@@ -81,11 +81,16 @@ public class UsuarioController {
    Long usuarioId = Long.parseLong(id);
    Usuario usuarioExistente = usuarioService.findById(usuarioId); // já lança exceção se não achar
 
+   // Atualiza todos os campos permitidos
    usuarioExistente.setNome(usuario.getNome());
+   usuarioExistente.setEmail(usuario.getEmail());
+   usuarioExistente.setSenha(usuario.getSenha());
+   usuarioExistente.setNivelAcesso(usuario.getNivelAcesso());
+   usuarioExistente.setStatusUsuario(usuario.getStatusUsuario());
 
-   Usuario usuarioAtualizada = usuarioService.save(usuarioExistente);
+   Usuario usuarioAtualizado = usuarioService.save(usuarioExistente);
 
-   return ResponseEntity.ok(usuarioAtualizada);
+   return ResponseEntity.ok(usuarioAtualizado);
   } catch (NumberFormatException e) {
    return ResponseEntity.badRequest().body(
            Map.of(
@@ -99,7 +104,7 @@ public class UsuarioController {
            Map.of(
                    "status", 404,
                    "error", "Not Found",
-                   "message", "Usuario não encontrada com o id " + id
+                   "message", "Usuario não encontrado com o id " + id
            )
    );
   }
