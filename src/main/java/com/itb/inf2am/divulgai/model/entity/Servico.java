@@ -13,7 +13,7 @@ public class Servico {
 
 
     @Column(length = 200, nullable = false)
-    private boolean descricao;
+    private String descricao;
 
     @Column(length = 200, nullable = false)
     private boolean statusServico;
@@ -37,11 +37,11 @@ public class Servico {
         this.nome = nome;
     }
 
-    public boolean isDescricao() {
+    public String getDescricao() {
         return descricao;
     }
 
-    public void setDescricao(boolean descricao) {
+    public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
 
