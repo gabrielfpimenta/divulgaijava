@@ -24,7 +24,7 @@ public class PrestadorService {
     // Método responsável em Criar o Prestador no banco de dados
 
     public Prestador save(Prestador Prestador) {
-        Prestador.setStatusPrestador(true);
+        Prestador.setStatusPrestador("ATIVO");
         return prestadorRepository.save(Prestador);
     }
 

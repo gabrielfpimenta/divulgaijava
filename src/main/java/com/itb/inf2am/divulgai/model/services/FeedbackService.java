@@ -23,7 +23,7 @@ public class FeedbackService {
     // Método responsável em Criar o Feedback no banco de dados
 
     public Feedback save(Feedback Feedback) {
-        Feedback.setStatusFeedback(true);
+        Feedback.setStatusFeedback("ATIVO");
         return feedbackRepository.save(Feedback);
     }
 

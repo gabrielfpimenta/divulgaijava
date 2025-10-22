@@ -3,7 +3,6 @@ package com.itb.inf2am.divulgai.model.entity;
 import jakarta.persistence.*;
 
 @Entity
-
 public class Contato {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,37 +15,25 @@ public class Contato {
     private String link;
 
     @Column(length = 20, nullable = false)
-    private boolean statusContato;
+    private String statusContato;
 
-    public Long getId() {
-        return id;
-    }
+    // Substitui o ManyToOne: só guarda o id do prestador
+    @Column(nullable = false)
+    private Long prestadorId;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    // getters e setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public String getTipoContato() {
-        return tipoContato;
-    }
+    public String getTipoContato() { return tipoContato; }
+    public void setTipoContato(String tipoContato) { this.tipoContato = tipoContato; }
 
-    public void setTipoContato(String tipoContato) {
-        this.tipoContato = tipoContato;
-    }
+    public String getLink() { return link; }
+    public void setLink(String link) { this.link = link; }
 
-    public String getLink() {
-        return link;
-    }
+    public String getStatusContato() { return statusContato; }
+    public void setStatusContato(String statusContato) { this.statusContato = statusContato; }
 
-    public void setLink(String link) {
-        this.link = link;
-    }
-
-    public boolean getStatusContato() {
-        return statusContato;
-    }
-
-    public void setStatusContato(boolean statusContato) {
-        this.statusContato = statusContato;
-    }
+    public Long getPrestadorId() { return prestadorId; }
+    public void setPrestadorId(Long prestadorId) { this.prestadorId = prestadorId; }
 }

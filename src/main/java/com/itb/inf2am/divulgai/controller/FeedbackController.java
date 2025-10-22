@@ -32,8 +32,11 @@ public class FeedbackController {
 
     @PostMapping
     public Feedback create(@RequestBody Feedback feedback) {
-        return feedbackService.save(feedback); // chama o service
+        feedback.setDataCadastro(LocalDateTime.now());
+        feedback.setStatusFeedback("ATIVO");
+        return feedbackService.save(feedback); // salva e retorna
     }
+
 
 
     @GetMapping("/{id}")

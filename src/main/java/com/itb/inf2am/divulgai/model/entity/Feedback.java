@@ -27,7 +27,20 @@ public class Feedback {
    private LocalDateTime dataCadastro;
 
     @Column(length = 20, nullable = false)
-   private boolean statusFeedback;
+   private String statusFeedback;
+
+    @Column(nullable = false)
+    private Long usuarioId;
+
+    @Column(nullable = false)
+    private Long prestadorId;
+
+    // getters e setters
+    public Long getUsuarioId() { return usuarioId; }
+    public void setUsuarioId(Long usuarioId) { this.usuarioId = usuarioId; }
+
+    public Long getPrestadorId() { return prestadorId; }
+    public void setPrestadorId(Long prestadorId) { this.prestadorId = prestadorId; }
 
     public Long getId() {
         return id;
@@ -69,11 +82,11 @@ public class Feedback {
         this.dataCadastro = dataCadastro;
     }
 
-    public boolean getStatusFeedback() {
+    public String getStatusFeedback() {
         return statusFeedback;
     }
 
-    public void setStatusFeedback(boolean statusFeedback) {
+    public void setStatusFeedback(String statusFeedback) {
         this.statusFeedback = statusFeedback;
     }
 }

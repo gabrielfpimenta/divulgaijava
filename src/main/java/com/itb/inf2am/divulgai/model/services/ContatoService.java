@@ -24,7 +24,7 @@ public class ContatoService {
     // Método responsável em criar a contato no banco de dados
     //CREATE DO CRUD
     public Contato save(Contato Contato) {
-        Contato.setStatusContato(true);
+        Contato.setStatusContato("ATIVO");
         return contatoRepository.save(Contato);
     }
 

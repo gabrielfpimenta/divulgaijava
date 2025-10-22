@@ -21,6 +21,24 @@ public class Servico {
     @Column(nullable = false) //REVISAR
     private String foto;
 
+    // Relação com Prestador
+    @ManyToOne
+    @JoinColumn(name = "prestador_id")
+    private Prestador prestador;
+
+    // Relação com Categoria
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
+    private Categoria categoria;
+
+    // Getters e Setters
+    public Prestador getPrestador() { return prestador; }
+    public void setPrestador(Prestador prestador) { this.prestador = prestador; }
+
+    public Categoria getCategoria() { return categoria; }
+    public void setCategoria(Categoria categoria) { this.categoria = categoria; }
+
+
     public Long getId() {
         return id;
     }

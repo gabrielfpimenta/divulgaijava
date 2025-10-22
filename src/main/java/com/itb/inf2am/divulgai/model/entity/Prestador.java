@@ -48,7 +48,7 @@ public class Prestador {
     private String uf;
 
     @Column(length = 20, nullable = false)
-    private boolean statusPrestador;
+    private String statusPrestador;
 
     public Long getId() {
         return id;
@@ -154,11 +154,11 @@ public class Prestador {
         this.uf = uf;
     }
 
-    public boolean getStatusPrestador() {
+    public String getStatusPrestador() {
         return statusPrestador;
     }
 
-    public void setStatusPrestador(boolean statusPrestador) {
+    public void setStatusPrestador(String statusPrestador) {
         this.statusPrestador = statusPrestador;
     }
 }
