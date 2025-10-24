@@ -35,4 +35,12 @@ public class PrestadorService {
                 .orElseThrow(() -> new RuntimeException("Produto não encontrado com o id " + id));
     }
 
+
+    // Método responsável em atualizar em atualizar o prestador
+    public Prestador update(Long id, Prestador prestador) {
+        Prestador prestadorExistente = findById(id);
+        prestadorExistente.setStatusPrestador(prestador.getStatusPrestador());
+
+        return prestadorRepository.save(prestadorExistente);
+    }
 }

@@ -62,4 +62,34 @@ import java.util.Map;
 
         }
 
+        @PutMapping("/{id}")
+        public ResponseEntity<Object> atualizarPrestador(@PathVariable String id, @RequestBody Prestador prestador) {
+            try {
+                Long prestadorId = Long.parseLong(id);
+                Prestador prestadorExistente = prestadorService.findById(prestadorId); // já lança exceção se não achar
+
+
+                Prestador prestadorAtualizada = prestadorService.save(prestadorExistente);
+
+                return ResponseEntity.ok(prestadorAtualizada);
+            } catch (NumberFormatException e) {
+                return ResponseEntity.badRequest().body(
+                        Map.of(
+                                "status", 400,
+                                "error", "Bad Request",
+                                "message", "O id informado não é válido: " + id
+                        )
+                );
+            } catch (RuntimeException e) {
+                return ResponseEntity.status(404).body(
+                        Map.of(
+                                "status", 404,
+                                "error", "Not Found",
+                                "message", "Categoria não encontrada com o id " + id
+                        )
+                );
+            }
+        }
+
+
     }
