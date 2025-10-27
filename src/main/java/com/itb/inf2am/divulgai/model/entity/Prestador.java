@@ -1,12 +1,11 @@
 package com.itb.inf2am.divulgai.model.entity;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 
 @Entity
-
 public class Prestador {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -50,6 +49,12 @@ public class Prestador {
     @Column(length = 20, nullable = false)
     private String statusPrestador;
 
+    // 🔹 Relação com Usuario
+    @ManyToOne
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario usuario;
+
+    // ===== Getters e Setters =====
     public Long getId() {
         return id;
     }
@@ -160,5 +165,13 @@ public class Prestador {
 
     public void setStatusPrestador(String statusPrestador) {
         this.statusPrestador = statusPrestador;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }
