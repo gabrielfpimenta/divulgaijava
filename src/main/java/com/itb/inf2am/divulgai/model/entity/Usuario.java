@@ -23,6 +23,14 @@ public class Usuario {
     @Column(length = 10, nullable = true)
     private String nivelAcesso; // ADMIN, PRESTADOR, CLIENTE
 
+
+    @Column(length = 100, nullable = false)
+    private String ps_01;
+
+
+    @Column(length = 100, nullable = false)
+    private String ps_02;
+
     @Lob
     @Column(nullable = true)
     private byte[] foto;
@@ -78,6 +86,22 @@ public class Usuario {
 
     public void setNivelAcesso(String nivelAcesso) {
         this.nivelAcesso = nivelAcesso;
+    }
+
+    public String getPs_01() {
+        return ps_01;
+    }
+
+    public void setPs_01(String ps_01) {
+        this.ps_01 = ps_01;
+    }
+
+    public String getPs_02() {
+        return ps_02;
+    }
+
+    public void setPs_02(String ps_02) {
+        this.ps_02 = ps_02;
     }
 
     public byte[] getFoto() {
