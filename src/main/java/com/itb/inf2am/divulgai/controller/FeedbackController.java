@@ -72,13 +72,11 @@ public class FeedbackController {
     public ResponseEntity<Object> atualizarFeedback(@PathVariable String id, @RequestBody Feedback feedback) {
         try {
             Long feedbackId = Long.parseLong(id);
-            Feedback feedbackExistente = feedbackService.findById(feedbackId); // já lança exceção se não achar
 
-            feedbackExistente.setDescricao(feedback.getDescricao());
+            Feedback atualizado = feedbackService.update(feedbackId, feedback);
 
-            Feedback feedbackAtualizada = feedbackService.save(feedbackExistente);
+            return ResponseEntity.ok(atualizado);
 
-            return ResponseEntity.ok(feedbackAtualizada);
         } catch (NumberFormatException e) {
             return ResponseEntity.badRequest().body(
                     Map.of(
@@ -92,7 +90,7 @@ public class FeedbackController {
                     Map.of(
                             "status", 404,
                             "error", "Not Found",
-                            "message", "Categoria não encontrada com o id " + id
+                            "message", "Feedback não encontrado com o id " + id
                     )
             );
         }
