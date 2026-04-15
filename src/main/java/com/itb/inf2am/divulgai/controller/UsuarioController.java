@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Base64;
 import java.util.Map;
 import java.util.List;
 
@@ -105,7 +106,10 @@ public class UsuarioController {
             Usuario usuarioExistente = usuarioService.findById(usuarioId);
 
             String foto = body.get("foto");
-            usuarioExistente.setFoto(foto);
+
+            byte[] fotoBytes = Base64.getDecoder().decode(foto);
+
+            usuarioExistente.setFoto(fotoBytes);
 
             Usuario usuarioAtualizado = usuarioService.save(usuarioExistente);
 
@@ -117,6 +121,16 @@ public class UsuarioController {
                             "status", 400,
                             "error", "Bad Request",
                             "message", "O id informado não é válido: " + id
+                    )
+            );
+
+        } catch (IllegalArgumentException e) {
+            // erro de base64 inválido
+            return ResponseEntity.badRequest().body(
+                    Map.of(
+                            "status", 400,
+                            "error", "Bad Request",
+                            "message", "Imagem em formato inválido (base64)"
                     )
             );
 
