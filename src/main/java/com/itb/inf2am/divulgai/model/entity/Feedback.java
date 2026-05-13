@@ -12,6 +12,9 @@ public class Feedback {
    private Long id;
 
 
+    @Column(name="nota", nullable = false)
+    private Integer nota;
+
     @Column(length = 200, nullable = false)
     private String titulo;
 
@@ -44,6 +47,14 @@ public class Feedback {
 
     public Long getId() {
         return id;
+    }
+
+    public Integer getNota() {
+        return nota;
+    }
+
+    public void setNota(Integer nota) {
+        this.nota = nota;
     }
 
     public void setId(Long id) {

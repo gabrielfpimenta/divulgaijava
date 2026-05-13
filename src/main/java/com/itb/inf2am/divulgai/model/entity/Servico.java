@@ -8,6 +8,9 @@ public class Servico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    @Column(name="contador", nullable = false)
+    private Integer contador;
 
     @Column(length = 100, nullable = false)
     private String nome;
@@ -32,6 +35,14 @@ public class Servico {
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
+
+    public Integer getcontador() {
+        return contador;
+    }
+
+    public void setcontador(Integer contador) {
+        this.contador = contador;
+    }
 
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }
