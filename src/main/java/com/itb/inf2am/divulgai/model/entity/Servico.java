@@ -8,8 +8,8 @@ public class Servico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    @Column(name="contador", nullable = false)
+
+    @Column(name = "contador", nullable = false)
     private Integer contador;
 
     @Column(length = 100, nullable = false)
@@ -33,32 +33,71 @@ public class Servico {
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    // =========================
+    // GETTERS E SETTERS
+    // =========================
 
-    public Integer getcontador() {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Integer getContador() {
         return contador;
     }
 
-    public void setcontador(Integer contador) {
+    public void setContador(Integer contador) {
         this.contador = contador;
     }
 
-    public String getNome() { return nome; }
-    public void setNome(String nome) { this.nome = nome; }
+    public String getNome() {
+        return nome;
+    }
 
-    public String getDescricao() { return descricao; }
-    public void setDescricao(String descricao) { this.descricao = descricao; }
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-    public boolean getStatusServico() { return statusServico; }
-    public void setStatusServico(boolean statusServico) { this.statusServico = statusServico; }
+    public String getDescricao() {
+        return descricao;
+    }
 
-    public byte[] getFoto() { return foto; }
-    public void setFoto(byte[] foto) { this.foto = foto; }
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
 
-    public Prestador getPrestador() { return prestador; }
-    public void setPrestador(Prestador prestador) { this.prestador = prestador; }
+    public boolean getStatusServico() {
+        return statusServico;
+    }
 
-    public Categoria getCategoria() { return categoria; }
-    public void setCategoria(Categoria categoria) { this.categoria = categoria; }
+    public void setStatusServico(boolean statusServico) {
+        this.statusServico = statusServico;
+    }
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
+    }
+
+    public Prestador getPrestador() {
+        return prestador;
+    }
+
+    public void setPrestador(Prestador prestador) {
+        this.prestador = prestador;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
 }

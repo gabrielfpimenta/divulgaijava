@@ -51,6 +51,7 @@ public class ServicoService {
         servico.setNome(dto.getNome());
         servico.setDescricao(dto.getDescricao());
         servico.setStatusServico(true);
+        servico.setContador(0);
 
         // =========================
         // FOTO BASE64 → BYTE[]
