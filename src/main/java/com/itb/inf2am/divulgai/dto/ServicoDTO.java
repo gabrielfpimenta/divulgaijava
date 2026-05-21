@@ -5,6 +5,7 @@ public class ServicoDTO {
     private String nome;
     private String descricao;
     private String foto; // BASE64 STRING
+    private Integer contador;
 
     private Long prestadorId;
     private Long categoriaId;
@@ -17,6 +18,9 @@ public class ServicoDTO {
 
     public String getFoto() { return foto; }
     public void setFoto(String foto) { this.foto = foto; }
+
+    public Integer getContador() { return contador; }
+    public void setContador(Integer contador) { this.contador = contador; }
 
     public Long getPrestadorId() { return prestadorId; }
     public void setPrestadorId(Long prestadorId) { this.prestadorId = prestadorId; }
