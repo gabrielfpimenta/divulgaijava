@@ -51,7 +51,17 @@ public class ServicoService {
         servico.setNome(dto.getNome());
         servico.setDescricao(dto.getDescricao());
         servico.setStatusServico(true);
-        servico.setContador(0);
+
+        Integer contador = dto.getContador();
+        if (contador == null) {
+            contador = 0;
+        }
+
+        if (contador < 0) {
+            throw new RuntimeException("contador não pode ser negativo");
+        }
+
+        servico.setContador(contador);
 
         // =========================
         // FOTO BASE64 → BYTE[]
