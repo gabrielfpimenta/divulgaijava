@@ -97,4 +97,21 @@ public class ServicoService {
 
         return servicoRepository.save(servico);
     }
+
+    public ServicoDTO incrementarContador(Long id) {
+        Servico servico = servicoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Serviço não encontrado"));
+
+        Integer contadorAtual = servico.getContador();
+
+        if (contadorAtual == null) {
+            contadorAtual = 0;
+        }
+
+        servico.setContador(contadorAtual + 1);
+
+        Servico servicoSalvo = servicoRepository.save(servico);
+
+        return new ServicoDTO(servicoSalvo);
+    }
 }

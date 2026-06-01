@@ -1,14 +1,18 @@
 package com.itb.inf2am.divulgai.dto;
 
+import com.itb.inf2am.divulgai.model.entity.Servico;
+
 public class ServicoDTO {
 
     private String nome;
     private String descricao;
     private String foto; // BASE64 STRING
-    private Integer contador;
 
     private Long prestadorId;
     private Long categoriaId;
+
+    public ServicoDTO(Servico servicoSalvo) {
+    }
 
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }
@@ -19,12 +23,13 @@ public class ServicoDTO {
     public String getFoto() { return foto; }
     public void setFoto(String foto) { this.foto = foto; }
 
-    public Integer getContador() { return contador; }
-    public void setContador(Integer contador) { this.contador = contador; }
-
     public Long getPrestadorId() { return prestadorId; }
     public void setPrestadorId(Long prestadorId) { this.prestadorId = prestadorId; }
 
     public Long getCategoriaId() { return categoriaId; }
     public void setCategoriaId(Long categoriaId) { this.categoriaId = categoriaId; }
+
+    public Integer getContador() {
+        return 0;
+    }
 }
