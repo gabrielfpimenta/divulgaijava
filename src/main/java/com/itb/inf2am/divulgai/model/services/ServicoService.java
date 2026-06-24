@@ -37,35 +37,65 @@ public class ServicoService {
 
     public Servico save(Servico servico) {
         servico.setStatusServico(true);
+
+        if (servico.getContador() == null) {
+            servico.setContador(0);
+        }
+
         return servicoRepository.save(servico);
     }
 
     public Servico saveFromDTO(ServicoDTO dto) {
-
         if (dto == null) {
             throw new RuntimeException("DTO nulo");
         }
 
         Servico servico = new Servico();
 
-        servico.setNome(dto.getNome());
-        servico.setDescricao(dto.getDescricao());
+        aplicarDadosDoDTO(servico, dto, false);
+
+        return servicoRepository.save(servico);
+    }
+
+    public Servico updateFromDTO(Long id, ServicoDTO dto) {
+        if (dto == null) {
+            throw new RuntimeException("DTO nulo");
+        }
+
+        Servico servico = findById(id);
+
+        aplicarDadosDoDTO(servico, dto, true);
+
+        return servicoRepository.save(servico);
+    }
+
+    private void aplicarDadosDoDTO(Servico servico, ServicoDTO dto, boolean isUpdate) {
+        if (dto.getNome() != null) {
+            servico.setNome(dto.getNome());
+        }
+
+        if (dto.getDescricao() != null) {
+            servico.setDescricao(dto.getDescricao());
+        }
+
         servico.setStatusServico(true);
 
-        Integer contador = dto.getContador();
-        if (contador == null) {
-            contador = 0;
+        if (!isUpdate) {
+            Integer contador = dto.getContador();
+
+            if (contador == null) {
+                contador = 0;
+            }
+
+            if (contador < 0) {
+                throw new RuntimeException("contador não pode ser negativo");
+            }
+
+            servico.setContador(contador);
+        } else if (servico.getContador() == null) {
+            servico.setContador(0);
         }
 
-        if (contador < 0) {
-            throw new RuntimeException("contador não pode ser negativo");
-        }
-
-        servico.setContador(contador);
-
-        // =========================
-        // FOTO BASE64 → BYTE[]
-        // =========================
         if (dto.getFoto() != null && !dto.getFoto().isEmpty()) {
             try {
                 byte[] imagemBytes = Base64.getDecoder().decode(dto.getFoto());
@@ -75,27 +105,27 @@ public class ServicoService {
             }
         }
 
-        // PRESTADOR
         if (dto.getPrestadorId() == null) {
-            throw new RuntimeException("prestadorId ausente");
+            if (!isUpdate) {
+                throw new RuntimeException("prestadorId ausente");
+            }
+        } else {
+            Prestador prestador = prestadorRepository.findById(dto.getPrestadorId())
+                    .orElseThrow(() -> new RuntimeException("Prestador não encontrado"));
+
+            servico.setPrestador(prestador);
         }
 
-        Prestador prestador = prestadorRepository.findById(dto.getPrestadorId())
-                .orElseThrow(() -> new RuntimeException("Prestador não encontrado"));
-
-        servico.setPrestador(prestador);
-
-        // CATEGORIA
         if (dto.getCategoriaId() == null) {
-            throw new RuntimeException("categoriaId ausente");
+            if (!isUpdate) {
+                throw new RuntimeException("categoriaId ausente");
+            }
+        } else {
+            Categoria categoria = categoriaRepository.findById(dto.getCategoriaId())
+                    .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
+
+            servico.setCategoria(categoria);
         }
-
-        Categoria categoria = categoriaRepository.findById(dto.getCategoriaId())
-                .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
-
-        servico.setCategoria(categoria);
-
-        return servicoRepository.save(servico);
     }
 
     public ServicoDTO incrementarContador(Long id) {

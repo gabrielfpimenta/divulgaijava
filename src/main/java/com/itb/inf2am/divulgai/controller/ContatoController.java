@@ -7,62 +7,73 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
-import java.util.ArrayList;
 import java.util.List;
 
-// Getter (get): Apenas lê o valor do atributo.
-// Setter (set): Apenas modifica o valor do atributo.
+@RestController
+@RequestMapping("/api/v1/contato")
+public class ContatoController {
 
-    @RestController
-    @RequestMapping("/api/v1/contato")
+    @Autowired
+    private ContatoService contatoService;
 
-    public class ContatoController {
+    @GetMapping
+    public List<Contato> findAll() {
+        return contatoService.findAll();
+    }
 
-// Getter (get): Apenas lê o valor do atributo.
-// Setter (set): Apenas modifica o valor do atributo.
+    @PostMapping
+    public Contato create(@RequestBody Contato contato) {
+        return contatoService.save(contato);
+    }
 
-        @Autowired
-        private ContatoService contatoService; // Service, não repository
-
-        @GetMapping
-        public List<Contato> findAll() {
-            return contatoService.findAll(); // chama o service
-        }
-
-        @PostMapping
-        public Contato create(@RequestBody Contato contato) {
-            return contatoService.save(contato); // chama o service
-        }
-
-
-        @GetMapping("/{id}")
-        public ResponseEntity<Object> listarContatoPorId(@PathVariable String id) {
-            try {
-                return ResponseEntity.ok(contatoService.findById(Long.parseLong(id)));
-            } catch (NumberFormatException e) {
-                return ResponseEntity.badRequest().body(
-                        Map.of(
-                                "status", 400,
-                                "error", "Bad Request",
-                                "message", "O id informado não é válido: " + id
-                        )
-                );
-
-
-            } catch (RuntimeException e) {
-                return ResponseEntity.status(404).body(
-                        Map.of(
-                                "status", 404,
-                                "error", "Not Found",
-                                "message", "Contato não encontrada com o id " + id
-                        )
-
-                );
-
-            }
-
-
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> listarContatoPorId(@PathVariable String id) {
+        try {
+            return ResponseEntity.ok(contatoService.findById(Long.parseLong(id)));
+        } catch (NumberFormatException e) {
+            return ResponseEntity.badRequest().body(
+                    Map.of(
+                            "status", 400,
+                            "error", "Bad Request",
+                            "message", "O id informado não é válido: " + id
+                    )
+            );
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(
+                    Map.of(
+                            "status", 404,
+                            "error", "Not Found",
+                            "message", e.getMessage()
+                    )
+            );
         }
     }
 
-
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> atualizarContato(
+            @PathVariable String id,
+            @RequestBody Contato contato
+    ) {
+        try {
+            Long contatoId = Long.parseLong(id);
+            Contato contatoAtualizado = contatoService.update(contatoId, contato);
+            return ResponseEntity.ok(contatoAtualizado);
+        } catch (NumberFormatException e) {
+            return ResponseEntity.badRequest().body(
+                    Map.of(
+                            "status", 400,
+                            "error", "Bad Request",
+                            "message", "O id informado não é válido: " + id
+                    )
+            );
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(
+                    Map.of(
+                            "status", 404,
+                            "error", "Not Found",
+                            "message", e.getMessage()
+                    )
+            );
+        }
+    }
+}

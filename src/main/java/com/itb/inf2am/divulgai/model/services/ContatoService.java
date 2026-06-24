@@ -1,6 +1,5 @@
 package com.itb.inf2am.divulgai.model.services;
 
-
 import com.itb.inf2am.divulgai.model.entity.Contato;
 import com.itb.inf2am.divulgai.model.repository.ContatoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,27 +10,44 @@ import java.util.List;
 @Service
 public class ContatoService {
 
-    @Autowired       // Injeção de dependência
+    @Autowired
     private ContatoRepository contatoRepository;
-
-    // Método responsável em listar todos os Contatos cadastrados no banco de dados
 
     public List<Contato> findAll() {
         return contatoRepository.findAll();
-
     }
 
-    // Método responsável em criar a contato no banco de dados
-    //CREATE DO CRUD
-    public Contato save(Contato Contato) {
-        Contato.setStatusContato("ATIVO");
-        return contatoRepository.save(Contato);
+    public Contato save(Contato contato) {
+        contato.setStatusContato("ATIVO");
+        return contatoRepository.save(contato);
     }
 
-    // Método responsável em listar o contato por ID
-    public Contato findById (Long id) {
+    public Contato findById(Long id) {
         return contatoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Produto não encontrado com o id " + id));
+                .orElseThrow(() -> new RuntimeException("Contato não encontrado com o id " + id));
     }
 
+    public Contato update(Long id, Contato contato) {
+        Contato existente = findById(id);
+
+        if (contato.getTipoContato() != null) {
+            existente.setTipoContato(contato.getTipoContato());
+        }
+
+        if (contato.getLink() != null) {
+            existente.setLink(contato.getLink());
+        }
+
+        if (contato.getPrestadorId() != null) {
+            existente.setPrestadorId(contato.getPrestadorId());
+        }
+
+        if (contato.getStatusContato() != null && !contato.getStatusContato().isBlank()) {
+            existente.setStatusContato(contato.getStatusContato());
+        } else {
+            existente.setStatusContato("ATIVO");
+        }
+
+        return contatoRepository.save(existente);
+    }
 }

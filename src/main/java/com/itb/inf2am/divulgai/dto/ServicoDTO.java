@@ -12,11 +12,11 @@ public class ServicoDTO {
     private Long prestadorId;
     private Long categoriaId;
 
-    // ✅ obrigatório para Jackson
+    // obrigatório para Jackson
     public ServicoDTO() {
     }
 
-    // ✔ Entity -> DTO
+    // Entity -> DTO
     public ServicoDTO(Servico servicoSalvo) {
         this.nome = servicoSalvo.getNome();
         this.descricao = servicoSalvo.getDescricao();
@@ -42,6 +42,7 @@ public class ServicoDTO {
         this.nome = nome;
     }
 
+
     public String getDescricao() {
         return descricao;
     }
@@ -49,6 +50,7 @@ public class ServicoDTO {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+
 
     public String getFoto() {
         return foto;
@@ -58,6 +60,7 @@ public class ServicoDTO {
         this.foto = foto;
     }
 
+
     public Long getPrestadorId() {
         return prestadorId;
     }
@@ -65,6 +68,7 @@ public class ServicoDTO {
     public void setPrestadorId(Long prestadorId) {
         this.prestadorId = prestadorId;
     }
+
 
     public Long getCategoriaId() {
         return categoriaId;
